@@ -30,4 +30,12 @@ public class Node {
     public List<Integer> getState() {
         return state;
     }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "n=" + n +
+                ", state=" + state +
+                '}';
+    }
 }

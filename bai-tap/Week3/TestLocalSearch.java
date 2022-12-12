@@ -27,15 +27,16 @@ public class TestLocalSearch {
         Integer[] arr = {1, 3, 0, 2};
         List<Integer> state = new ArrayList<>(Arrays.asList(arr));
         Node node = new Node(4, state);
-        System.out.println(LocalSearch.tryMovingOneQueen(node,2,2));
-
+        System.out.println("Node ban đầu: " + node);
+        System.out.println(LocalSearch.tryMovingOneQueen(node,3,2));
+        System.out.println("Node lúc sau: " + node);
 
     }
 
     public static void main(String[] args) {
 
-        TestCheckConflict();
-        //TestTryMovingOneQueen();
+        //TestCheckConflict();
+        TestTryMovingOneQueen();
 
     }
 }
