@@ -18,8 +18,6 @@ public class Queens {
 		BFS bfs = new BFS();
 		this.goal = bfs.bfsUsingQueue(new Node(n), n);
 	}
-	
-	
 
 	public static void main(String[] args) {
 		

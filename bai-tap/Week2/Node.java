@@ -1,111 +1,112 @@
 package Week2;
 
+import Utils.Utils;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Node {
 
-	int n;
-	List<Integer> state;
-	List<Node> neighbours;
-	boolean visited;
-	Node parent;
-	
-	public Node(int n) {
-		this.n = n;
-		this.state = new ArrayList<>();
-		this.neighbours = new ArrayList<>();
- 
-	}
-	
+    private int n; // số quân hậu cần được đặt
+    private List<Integer> state; // vị trí các quân hậu hiện tại trên bàn cờ
+    List<Node> neighbours; // danh sách các Node con của node đang xét
+    private Node parent;
+    private boolean visited;
 
-	public Node(int n, List<Integer> state) {
-		this.n = n;
-		this.state = state;
-		this.neighbours = new ArrayList<>();
-	}
+    public Node(int n) {
+        this.n = n;
+        this.state = new ArrayList<>();
+        this.neighbours = new ArrayList<>();
+    }
 
-	public void addNeighbours(Node nb) {
-		this.neighbours.add(nb);
-	}
-	
-	@Override
-	public String toString() {
-		return "Node [state=" + state + "]";
-	}
+    public Node(int n, List<Integer> state) {
+        this.n = n;
+        this.state = state;
+        this.neighbours = new ArrayList<>();
+    }
 
+    @Override
+    public String toString() {
+        return "Node [state=" + state + "]";
+    }
 
-	public static boolean isValid(List<Integer> state) {
+    public int getN() {
+        return n;
+    }
 
-		if (state.size() == 1) {
-			return true;
-		} else if (state.size() > 1) {
+    public void setN(int n) {
+        this.n = n;
+    }
 
-			int lastIndex = state.size() - 1; // index cuối cùng
-			int valueLastIndex = state.get(lastIndex); // value của index cuối cùng
+    public List<Integer> getState() {
+        return state;
+    }
 
-			for (int i = 0; i < state.size() - 1; i++) {
+    public void setState(List<Integer> state) {
+        this.state = state;
+    }
 
-				// check hàng ngang
-				if (state.get(i) == valueLastIndex) {
+    public Node getParent() {
+        return parent;
+    }
 
-					return false;
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
 
-				}
-				/*
-				 * check hàng chéo |index - index| = |giá trị - giá trị|
-				 */
-				if (Math.abs(lastIndex - i) == Math.abs(valueLastIndex - state.get(i))) {
+    public boolean isVisited() {
+        return visited;
+    }
 
-					return false;
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
 
-				}
+    public void addNeighbours(Node nb) {
+        this.neighbours.add(nb);
+    }
 
-			}
+    public List<Node> getNeighbours() {
 
-		}
-		return true;
+        /*
+         * trả về danh sách các Node con của Node đang xét
+         */
 
-	}
+        if (state.size() == n) return null;
+        else if (state.size() < n) {
 
-	// kiểm tra có thể đặt con hậu mới vào bàn cờ hay không ?
-	public List<Integer> place(int x) {
+            for (int i = 0; i < n; i++) {
 
-		List<Integer> stateCopy = new ArrayList<>();
-		stateCopy.addAll(state);
-		stateCopy.add(x);
-		boolean isValidStateCopy = isValid(stateCopy);
+                List<Integer> new_state = place(i);
+                if (new_state != null) {
 
-		if (stateCopy.size() <= n && isValidStateCopy == true) {
+                    Node new_Node = new Node(n, new_state);
+                    this.addNeighbours(new_Node);
+                }
 
-			return stateCopy;
+            }
+        }
+        return this.neighbours;
+    }
 
-		} else
-			return null;
-	}
+    public List<Integer> place(int x) {
 
-	/*
-	 * trả về danh sách các Node con của Node đang xét
-	 */
-	public List<Node> getNeighbours() {
+        /*
+         * kiểm tra có thể đặt con hậu mới vào bàn cờ hay không ?
+         */
 
-		if (state.size() == n)
-			return null;
-		else if (state.size() < n) {
+        List<Integer> stateCopy = new ArrayList<>();
+        stateCopy.addAll(getState());
+        stateCopy.add(x);
+        boolean isValidStateCopy = Utils.isValid(stateCopy);
 
-			for (int i = 0; i < n; i++) {
+        if (isValidStateCopy == true) {
 
-				List<Integer> new_state = place(i);
-				if (new_state != null) {
+            return stateCopy; // => trả về danh sách các vị trí quân hậu mới nếu hợp lệ
 
-					Node new_Node = new Node(n, new_state);
-					this.addNeighbours(new_Node);
-				}
-
-			}
-		}
-		return this.neighbours;
-
-	}
+        } else
+            return null;
+    }
 
 }
