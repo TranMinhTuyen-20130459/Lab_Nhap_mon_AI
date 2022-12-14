@@ -76,7 +76,7 @@ public class LocalSearch {
 
     public static void run() {
 
-        Node initial = new Node(8); // hoặc 5,6,7,8
+        Node initial = new Node(5); // hoặc 5,6,7,8
         if (heuristic(initial) == 0) { //goal
             System.out.println(initial.state);
             return;

@@ -24,6 +24,4 @@ public final class Utils {
     public static int random(int bound) {
         return rand.nextInt(bound);
     }
-
-
 }
